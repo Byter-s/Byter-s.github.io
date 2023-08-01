@@ -1,0 +1,128 @@
+
+<html>
+
+<head>
+	<meta charset="UTF-8">
+
+	<!--引入jQuery框架-->
+	<script type="text/javascript" src="map/jquery-1.9.1.min.js"></script>
+	<!--引入jVectorMap库-->
+	<script type="text/javascript" src="map/jquery-jvectormap-1.2.2.min.js"></script>
+	<!--引入样式表-->
+	<link href="map/jquery-jvectormap-1.2.2.css" rel="stylesheet" media="screen">
+
+
+	<!--引入中国地图数据库-->
+	<script type="text/javascript" src="map/jquery-jvectormap-cn-merc-en.js"></script>
+
+	<!--引入美国地图数据库-->
+	<!--script type="text/javascript" src="map/jquery-jvectormap-us-aea.js"></script-->
+	<!--引入世界地图数据库-->
+	<!--script type="text/javascript" src="map/jquery-jvectormap-world-mill.js"></script-->
+
+</head>
+
+<body>
+	<!--background-color: 地图背景颜色-->
+	<div id="map" style="background-color:#1e1e1e"> </div>
+	<script>
+		$('#map').vectorMap({
+
+			// 此处更改地图
+			map: 'cn_merc_en',   // 中国地图
+			//map: 'us_aea',     // 美国地图
+			//map: 'world_mill', // 世界地图
+
+
+			backgroundColor: 'transparent',
+			zoomMin: 0.8, // 鼠标缩放时的最小比例
+			zoomMax: 4, // 鼠标缩放时的最大比例
+			focusOn: {
+				x: 0.55,
+				y: 20,
+				scale: 0.9
+			},
+			regionStyle: {
+				initial: {
+					fill: '#e5e5e5',   // 地图颜色
+					"fill-opacity": 1, // 省份（州）是否隐藏，鼠标滑动时显示; 1：显示，2：隐藏。
+					stroke: 'none',
+					"stroke-width": 0,
+					"stroke-opacity": 1
+				},
+				hover: {
+					fill: '#ff3f3f',  // 鼠标滑动至某省份的高亮颜色。
+					"fill-opacity": 0.85
+				},
+				selected: {
+					fill: 'yellow'
+				},
+				selectedHover: {}
+			},
+			markerStyle: {
+				initial: {
+					fill: '#FFB90F', // 足迹位置的填充颜色
+					stroke: '#fff'   // 足迹位置的描边颜色
+				},
+				hover: {
+					fill: '#FF7F24', // 鼠标滑动至足迹位置后的填充颜色
+					stroke: '#fff',  // 鼠标滑动至足迹位置后的描边颜色
+					"fill-opacity": 1
+				},
+			},
+			markers: [ // 足迹位置
+
+				// {latLng: [经度（保留两位小数）, 纬度（保留两位小数）], name: '城市名称'},
+				// 推荐查询经纬度网站：http://www.gpsspg.com/maps.htm
+
+				//直辖市
+				{ latLng: [39.90, 116.41], name: '北京' },
+				{ latLng: [31.24, 121.50], name: '上海' },
+				{ latLng: [39.72, 117.31], name: '天津' },
+
+				//云南省
+				{ latLng: [24.88, 102.82], name: '昆明' },
+				{ latLng: [25.22, 103.82], name: '曲靖*' },
+				{ latLng: [26.22, 104.10], name: '宣威' },
+				{ latLng: [22.01, 100.80], name: '西双版纳*' },
+				{ latLng: [23.63, 102.83], name: '建水*' },
+				{ latLng: [23.11, 102.74], name: '元阳*' },
+				{ latLng: [23.36, 103.16], name: '个旧*' },
+				{ latLng: [24.34, 102.54], name: '玉溪' },
+				{ latLng: [25.56, 103.25], name: '寻甸' },
+				{ latLng: [25.04, 101.53], name: '楚雄' },
+				{ latLng: [24.01, 097.85], name: '瑞丽' },
+				{ latLng: [24.43, 098.59], name: '芒市' },
+				{ latLng: [22.79, 100.98], name: '普洱' },
+				{ latLng: [25.61, 100.27], name: '大理' },
+				{ latLng: [26.88, 100.23], name: '丽江' },
+
+				{ latLng: [20.02, 110.33], name: '海口' },
+				{ latLng: [24.78, 110.50], name: '桂林 - 阳朔' },
+				{ latLng: [23.16, 113.27], name: '广州' },
+				{ latLng: [22.55, 113.88], name: '深圳' },
+				{ latLng: [22.27, 114.16], name: '香港' },
+				{ latLng: [22.20, 113.55], name: '澳门' },
+				{ latLng: [24.48, 118.03], name: '厦门' },
+				{ latLng: [27.76, 118.04], name: '武夷山' },
+				
+				//台湾省
+				{ latLng: [25.03, 121.52], name: '台北' },
+				{ latLng: [24.00, 121.60], name: '花莲' },
+				{ latLng: [23.00, 120.19], name: '台南' },
+				{ latLng: [22.63, 120.31], name: '高雄' },
+				//台湾省地图测试点
+				// { latLng: [21.95, 120.81], name: '下' },
+				// { latLng: [25.29, 121.54], name: '上' },
+				// { latLng: [23.07, 120.06], name: '左尖角' },
+				// { latLng: [25.01, 121.97], name: '右尖角' },
+
+				//陕西省
+				{ latLng: [34.57, 110.09], name: '华阴 - 华山' },
+				{ latLng: [34.23, 108.93], name: '西安' },
+				{ latLng: [34.70, 112.51], name: '洛阳' },
+			]
+		});
+	</script>
+
+</html>

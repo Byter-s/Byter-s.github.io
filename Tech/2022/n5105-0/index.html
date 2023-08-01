@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>【软路由日志】零——PVE虚拟化环境 - Byter | Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Byter | Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Byter | Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="基于PVE虚拟化搭建All in One的软路由，为了实现各种需求淌了不少坑，仅此记录。"><meta property="og:type" content="blog"><meta property="og:title" content="【软路由日志】零——PVE虚拟化环境"><meta property="og:url" content="https://byter.ink/Tech/2022/n5105-0/"><meta property="og:site_name" content="Byter | Blog"><meta property="og:description" content="基于PVE虚拟化搭建All in One的软路由，为了实现各种需求淌了不少坑，仅此记录。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://byter.ink/gallery/covers/network.jpg"><meta property="article:published_time" content="2022-06-22T09:11:19.000Z"><meta property="article:modified_time" content="2023-06-25T10:30:00.000Z"><meta property="article:author" content="Byter"><meta property="article:tag" content="Hardware"><meta property="article:tag" content="Network"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://byter.ink/gallery/covers/network.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://byter.ink/Tech/2022/n5105-0/"},"headline":"【软路由日志】零——PVE虚拟化环境","image":["https://byter.ink/gallery/covers/network.jpg"],"datePublished":"2022-06-22T09:11:19.000Z","dateModified":"2023-06-25T10:30:00.000Z","author":{"@type":"Person","name":"Byter"},"publisher":{"@type":"Organization","name":"Byter | Blog","logo":{"@type":"ImageObject","url":"https://byter.ink/img/logo.svg"}},"description":"基于PVE虚拟化搭建All in One的软路由，为了实现各种需求淌了不少坑，仅此记录。"}</script><link rel="canonical" href="https://byter.ink/Tech/2022/n5105-0/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Byter | Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/arch">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tag">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Todo List" href="/todo"><i class="fa fa-sticky-note"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Have fun!" href="/404"><i class="fas fa-cat"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Footprints" href="/map"><i class="fas fa-shoe-prints"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/gallery/covers/network.jpg" alt="【软路由日志】零——PVE虚拟化环境"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-06-22T09:11:19.000Z" title="2022/6/22 17:11:19">2022-06-22</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-06-25T10:30:00.000Z" title="2023/6/25 18:30:00">2023-06-25</time></span><span class="level-item"><a class="link-muted" href="/category/Tech/">Tech</a></span><span class="level-item">8 minutes read (About 1256 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">【软路由日志】零——PVE虚拟化环境</h1><div class="content"><p>基于PVE虚拟化搭建All in One的软路由，为了实现各种需求淌了不少坑，仅此记录。</p>
+<span id="more"></span>
+
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h3 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h3><blockquote>
+<p><strong>CPU</strong>: N5105 @2.0GHz</p>
+<p><strong>RAM</strong>: DDR4 8G 3200MHz</p>
+<p><strong>GPU</strong>: Intel UHD 24EU</p>
+<p><strong>Network</strong>: 4 × i225-2.5G</p>
+<p><strong>I&#x2F;O</strong>: 2 × USB3.0 + 2 × USB2.0 | HDMI1.4 + DP1.4</p>
+<p><strong>SSD</strong>: M.2 NVME 1T</p>
+</blockquote>
+<p>除去PVE管理口还剩三个2.5Gbps网口，满足软路由需求；4核CPU和24EU核显满足处理和解码需求；DP1.4的4K@60Hz输出提供<code>Windows</code>+<code>Hyper-V</code>方案的可行性。</p>
+<p>目前几个小问题：</p>
+<ul>
+<li>内存最高仅运行在2933MHz，3200的条略微浪费；</li>
+<li>PVE虚拟化方案下，核显无法直通。</li>
+</ul>
+<h3 id="拓扑结构"><a href="#拓扑结构" class="headerlink" title="拓扑结构"></a>拓扑结构</h3><p>根据需求设想的业务拓扑结构：</p>
+<p><img src="http://cdn.byter.ink/blog-img/n5015-0_0.png" alt="Needs"></p>
+<p>网络结构的拓扑结构：</p>
+<p><img src="http://cdn.byter.ink/blog-img/n5105-0_1.png" alt="Network"></p>
+<p>由于并无千兆内网需求、多拨存在风险，并且开学要带走软路由，仍采用光猫拨号方案，软硬路由并行。</p>
+<p>PS：<a target="_blank" rel="noopener" href="https://processon.com/">绘图工具</a></p>
+<hr>
+<h2 id="PVE虚拟化部署"><a href="#PVE虚拟化部署" class="headerlink" title="PVE虚拟化部署"></a>PVE虚拟化部署</h2><h3 id="PVE安装"><a href="#PVE安装" class="headerlink" title="PVE安装"></a>PVE安装</h3><p>PVE官网下载<a target="_blank" rel="noopener" href="https://proxmox.com/en/downloads/category/iso-images-pve">最新ISO镜像</a>（本次采用7.2-1），用<a target="_blank" rel="noopener" href="https://github.com/pbatard/rufus">Rufus</a>工具写入U盘，接入显示器和启动盘引导。</p>
+<p>安装时不插入联网，手动选择时区，选择数字最小的<code>enp2s0</code>作为管理网口（以对应机器的ETH0接口），安装PVE并启动。</p>
+<p>已知光猫作为网关IP为<code>192.168.1.1</code>，其DHCP自动分配硬路由为<code>192.168.1.9</code>，硬路由下属设备处在<code>192.168.0.*</code>网段。故考虑IP分配：</p>
+<table>
+<thead>
+<tr>
+<th align="center">Device</th>
+<th align="center">IP</th>
+<th align="center">Physical Connection</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>光猫</strong></td>
+<td align="center"><code>192.168.1.1</code></td>
+<td align="center">光口</td>
+</tr>
+<tr>
+<td align="center"><strong>TP- Link硬路由</strong></td>
+<td align="center"><code>192.168.1.9</code></td>
+<td align="center">光猫LAN2(100M)</td>
+</tr>
+<tr>
+<td align="center">└ <em>无线设备</em></td>
+<td align="center"><code>192.168.0.*</code></td>
+<td align="center">WIFI LAN</td>
+</tr>
+<tr>
+<td align="center"><strong>N5105软路由</strong></td>
+<td align="center"><code>192.168.1.100~255</code></td>
+<td align="center">光猫LAN1(1000M)</td>
+</tr>
+<tr>
+<td align="center">└ 管理网口</td>
+<td align="center"><code>192.168.1.200</code></td>
+<td align="center"><code>enp2s0</code></td>
+</tr>
+<tr>
+<td align="center">└ Openwrt</td>
+<td align="center"><code>192.168.1.100</code></td>
+<td align="center"><code>enp3s0</code></td>
+</tr>
+<tr>
+<td align="center">&#x2F;</td>
+<td align="center">&#x2F;</td>
+<td align="center"><code>enp4s0</code>,<code>enp5s0</code></td>
+</tr>
+</tbody></table>
+<p>故安装时，填写管理IP为<code>192.168.1.200</code>，DNS填写光猫IP，完成安装。</p>
+<p>网线连接光猫和软路由管理口，电脑接入局域网（有&#x2F;无线均可）访问<code>https://IP:8006</code>进入WebUI管理。</p>
+<h3 id="存储池配置"><a href="#存储池配置" class="headerlink" title="存储池配置"></a>存储池配置</h3><p>1TB的固态盘，PVE默认划分100GB给<code>local</code>存储池，剩下八百多都给<code>local-lvm</code>。由于没有镜像和模板的管理需求，同时需要传输大文件至<code>local</code>目录下，将二者合并。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l  #查看磁盘分区大小</span><br><span class="line"></span><br><span class="line">lvremove pve/data  #移除local-lvm对应分区</span><br><span class="line">lvextend -l +100%FREE -r pve/root  #将全部剩余容量添加至local分区</span><br></pre></td></tr></table></figure>
+
+<p>此后WebUI左侧<code>数据中心-&gt;存储-&gt;local</code>，内容部分全选，让<code>local</code>继承<code>local-lvm</code>的功能和权限。</p>
+<h3 id="网络配置"><a href="#网络配置" class="headerlink" title="网络配置"></a>网络配置</h3><p>目前光猫连接管理口仅供部署时使用，后期WAN直接接入主路由Openwrt。进入<code>pve-&gt;网络</code>，网桥<code>vmbr0</code>的设置即为管理口的物理端口和IP设置，可后期更改。</p>
+<p>此时PVE仍无法访问网络，也无法Ping通局域网设备。后来才发现是没有配置防火墙规则和DNS😶：</p>
+<ul>
+<li><p>进入<code>pve-&gt;系统-&gt;DNS</code>，更改搜索域为<code>pve.lan</code>，DNS设为网关<code>192.168.1.1</code>。实际测试更换为公共DNS（如阿里DNS）仍无法联网。</p>
+</li>
+<li><p>进入<code>pve-&gt;防火墙</code>，添加两组<code>in</code>和<code>out</code>均为<code>ACCEPT</code>并启用。</p>
+</li>
+</ul>
+<p>重启，PVE已经可以访问公网。</p>
+<h4 id="升级至最新"><a href="#升级至最新" class="headerlink" title="升级至最新"></a>升级至最新</h4><p>连接公网后将PVE的软件包升至最新。</p>
+<p>先将Debian默认的软件源更换为国内源。下载工具<a target="_blank" rel="noopener" href="https://github.com/ivanhao/pvetools">PVE Tools</a>并运行脚本，选择第一项即可更换为<code>Aliyun</code>和中科大源。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt update  #获取软件包列表</span><br><span class="line">apt apt upgrade -y  #升级软件包</span><br><span class="line"></span><br><span class="line">pveversion -v  #查看PVE版本</span><br></pre></td></tr></table></figure>
+
+<h3 id="硬件直通"><a href="#硬件直通" class="headerlink" title="硬件直通"></a>硬件直通</h3><p>便于后期实现网卡直通，考虑到网卡可能乱序，先利用<code>ethtools</code>确定四个网口的顺序信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt install ethtool -y  #安装ethtool</span><br><span class="line">lspci | grep -i &#x27;eth&#x27;  #查看所有网卡信息</span><br><span class="line"></span><br><span class="line">ethtool -i enp2s0  #通过名称查看bus-info</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">外部网口</th>
+<th align="center">设备名称</th>
+<th align="center">总线位置</th>
+<th align="center"><em>Openwrt内名称</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">ETH0</td>
+<td align="center">enp2s0</td>
+<td align="center">0000:02:00.0</td>
+<td align="center"><em>eth0 (bridge)</em></td>
+</tr>
+<tr>
+<td align="center">ETH1</td>
+<td align="center">enp3s0</td>
+<td align="center">0000:03:00.0</td>
+<td align="center"><em>eth1</em></td>
+</tr>
+<tr>
+<td align="center">ETH2</td>
+<td align="center">enp4s0</td>
+<td align="center">0000:04:00.0</td>
+<td align="center"><em>eth2</em></td>
+</tr>
+<tr>
+<td align="center">ETH3</td>
+<td align="center">enp5s0</td>
+<td align="center">0000:05:00.0</td>
+<td align="center"><em>eth3</em></td>
+</tr>
+</tbody></table>
+<h4 id="设置硬件直通"><a href="#设置硬件直通" class="headerlink" title="设置硬件直通"></a>设置硬件直通</h4><p>可用PVE Tools中<code>PCI设备直通</code>实现。如果不生效则手动更改<code>/etc/default/grub</code>文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet&quot;  #注释此行</span><br><span class="line">GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet intel_iommu=on&quot;  #增加此行</span><br></pre></td></tr></table></figure>
+
+<p>随后更新grub文件并重启：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">update-grub</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p>至此，PVE部署全部完成。</p>
+<h2 id="VMware-vSphere-ESXi-部署"><a href="#VMware-vSphere-ESXi-部署" class="headerlink" title="VMware vSphere (ESXi) 部署"></a>VMware vSphere (ESXi) 部署</h2><h3 id="ESXi-7-0"><a href="#ESXi-7-0" class="headerlink" title="ESXi 7.0"></a>ESXi 7.0</h3><p>7.0各版本的下载地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://customerconnect.vmware.com/downloads/info/slug/datacenter_cloud_infrastructure/vmware_vsphere/7_0</span><br></pre></td></tr></table></figure>
+
+<p>由于ESXi 7.0不自带<code>Intel I225V</code>网卡驱动，需要手动将驱动合并入安装包中。教程：</p>
+<p><a target="_blank" rel="noopener" href="https://post.smzdm.com/p/avx50g2n/">ESXi7.0封装Intel I225V B3网卡驱动</a></p>
+<h3 id="ESXi-8-0"><a href="#ESXi-8-0" class="headerlink" title="ESXi 8.0"></a>ESXi 8.0</h3><p>8.0版本更新了网卡驱动，无需手动安装，开箱即用。</p>
+<p>下载地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://customerconnect.vmware.com/downloads/info/slug/datacenter_cloud_infrastructure/vmware_vsphere/8_0</span><br></pre></td></tr></table></figure>
+
+</div><div class="article-licensing box"><div class="licensing-title"><p>【软路由日志】零——PVE虚拟化环境</p><p><a href="https://byter.ink/Tech/2022/n5105-0/">https://byter.ink/Tech/2022/n5105-0/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Byter</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2022-06-22</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2023-06-25</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tag/Hardware/">Hardware</a><a class="link-muted mr-2" rel="tag" href="/tag/Network/">Network</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/Thoughts/2022/intro-2022/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">向后，向前</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/Code/2022/matlab-0/"><span class="level-item">Matlab Basic</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="Byter"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Byter</p><p class="is-size-6 is-block">Mathematics &amp; AI</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>39.908°N,116.398°E | Earth</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">9</p></a></div></div></nav></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#准备"><span class="level-left"><span class="level-item">1</span><span class="level-item">准备</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#硬件"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">硬件</span></span></a></li><li><a class="level is-mobile" href="#拓扑结构"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">拓扑结构</span></span></a></li></ul></li><li><a class="level is-mobile" href="#PVE虚拟化部署"><span class="level-left"><span class="level-item">2</span><span class="level-item">PVE虚拟化部署</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#PVE安装"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">PVE安装</span></span></a></li><li><a class="level is-mobile" href="#存储池配置"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">存储池配置</span></span></a></li><li><a class="level is-mobile" href="#网络配置"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">网络配置</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#升级至最新"><span class="level-left"><span class="level-item">2.3.1</span><span class="level-item">升级至最新</span></span></a></li></ul></li><li><a class="level is-mobile" href="#硬件直通"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">硬件直通</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#设置硬件直通"><span class="level-left"><span class="level-item">2.4.1</span><span class="level-item">设置硬件直通</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#VMware-vSphere-ESXi-部署"><span class="level-left"><span class="level-item">3</span><span class="level-item">VMware vSphere (ESXi) 部署</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#ESXi-7-0"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">ESXi 7.0</span></span></a></li><li><a class="level is-mobile" href="#ESXi-8-0"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">ESXi 8.0</span></span></a></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/category/Blog/"><span class="level-start"><span class="level-item">Blog</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/category/Code/"><span class="level-start"><span class="level-item">Code</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/category/Tech/"><span class="level-start"><span class="level-item">Tech</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/category/Thoughts/"><span class="level-start"><span class="level-item">Thoughts</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/category/Whatever/"><span class="level-start"><span class="level-item">Whatever</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/arch/2022/"><span class="level-start"><span class="level-item">2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/arch/2021/"><span class="level-start"><span class="level-item">2021</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tag/Hardware/"><span class="tag">Hardware</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Hexo/"><span class="tag">Hexo</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Introspection/"><span class="tag">Introspection</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tag/M-C/"><span class="tag">M&amp;C</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Matlab/"><span class="tag">Matlab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Modeling/"><span class="tag">Modeling</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Network/"><span class="tag">Network</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Nonsense/"><span class="tag">Nonsense</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Private/"><span class="tag">Private</span><span class="tag">2</span></a></div></div></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Icarus</span></span><span class="level-right"><span class="level-item tag">github.com</span></span></a></li><li><a class="level is-mobile" href="https://ppoffice.github.io/hexo-theme-icarus/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Docs</span></span><span class="level-right"><span class="level-item tag">ppoffice.github.io</span></span></a></li></ul></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Byter | Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Byter</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p><p class="is-size-7">© 2023</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

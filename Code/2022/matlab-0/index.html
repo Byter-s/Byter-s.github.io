@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Matlab Basic - Byter | Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Byter | Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Byter | Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="用于数学建模的Matlab基本语法和常用函数。"><meta property="og:type" content="blog"><meta property="og:title" content="Matlab Basic"><meta property="og:url" content="https://byter.ink/Code/2022/matlab-0/"><meta property="og:site_name" content="Byter | Blog"><meta property="og:description" content="用于数学建模的Matlab基本语法和常用函数。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://byter.ink/gallery/covers/code.jpg"><meta property="article:published_time" content="2022-01-18T03:51:00.000Z"><meta property="article:modified_time" content="2022-08-21T07:00:24.000Z"><meta property="article:author" content="Byter"><meta property="article:tag" content="Matlab"><meta property="article:tag" content="Modeling"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://byter.ink/gallery/covers/code.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://byter.ink/Code/2022/matlab-0/"},"headline":"Matlab Basic","image":["https://byter.ink/gallery/covers/code.jpg"],"datePublished":"2022-01-18T03:51:00.000Z","dateModified":"2022-08-21T07:00:24.000Z","author":{"@type":"Person","name":"Byter"},"publisher":{"@type":"Organization","name":"Byter | Blog","logo":{"@type":"ImageObject","url":"https://byter.ink/img/logo.svg"}},"description":"用于数学建模的Matlab基本语法和常用函数。"}</script><link rel="canonical" href="https://byter.ink/Code/2022/matlab-0/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Byter | Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/arch">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tag">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Todo List" href="/todo"><i class="fa fa-sticky-note"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Have fun!" href="/404"><i class="fas fa-cat"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Footprints" href="/map"><i class="fas fa-shoe-prints"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/gallery/covers/code.jpg" alt="Matlab Basic"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2022-01-18T03:51:00.000Z" title="2022/1/18 11:51:00">2022-01-18</time></span><span class="level-item">Updated&nbsp;<time dateTime="2022-08-21T07:00:24.000Z" title="2022/8/21 15:00:24">2022-08-21</time></span><span class="level-item"><a class="link-muted" href="/category/Code/">Code</a></span><span class="level-item">10 minutes read (About 1558 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">Matlab Basic</h1><div class="content"><p>用于数学建模的Matlab基本语法和常用函数。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="数据与变量"><a href="#数据与变量" class="headerlink" title="数据与变量"></a>数据与变量</h2><h3 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h3><p>矩阵为Matlab中最基本数据结构，常量为<code>1×1</code>的矩阵，向量为<code>1×n</code>或<code>n×1</code>的矩阵。矩阵默认定义为double双精度型。</p>
+<h4 id="定义矩阵"><a href="#定义矩阵" class="headerlink" title="定义矩阵"></a>定义矩阵</h4><p>定义矩阵可直接赋值。用空格或逗号分隔每行中元素，用分号分隔各行。</p>
+<p>$Eg.$ 定义矩阵 $A&#x3D;\begin{bmatrix}1 &amp; 2 &amp; 3\\4 &amp; 5 &amp; 6\\7 &amp; 8 &amp; 9\end{bmatrix}$：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>;<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>;<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>]</span><br><span class="line">A = [<span class="number">1</span> <span class="number">2</span> <span class="number">3</span>;<span class="number">4</span> <span class="number">5</span> <span class="number">6</span>;<span class="number">7</span> <span class="number">8</span> <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+
+<h5 id="冒号表达式"><a href="#冒号表达式" class="headerlink" title="冒号表达式"></a>冒号表达式</h5><p>冒号表达式可以快速生成具有均匀元素的行向量，以用于循环计数、作图和差分。冒号表达式的基本结构：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = a:b <span class="comment">%step==1</span></span><br><span class="line">A = a:step:b</span><br></pre></td></tr></table></figure>
+
+<p>即可生成$[a,b]$中以步长为$step$的行向量。当$step$省略时默认为<code>1</code>。</p>
+<h4 id="矩阵的元素"><a href="#矩阵的元素" class="headerlink" title="矩阵的元素"></a>矩阵的元素</h4><p>矩阵的子矩阵均可作为其元素被单独赋值、取出和使用。元素的索引借助其矩阵中的脚标：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B = A(x,y)</span><br></pre></td></tr></table></figure>
+
+<p>借助冒号表达式可以取出多行和多列的子矩阵。比如取出矩阵$A$的$x1$到$x2$行和$y1$到$y2$列：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B = A(x1:x2,y1:y2)</span><br></pre></td></tr></table></figure>
+
+<p>冒号表达式中为空表示范围内的“所有”。比如下面两行代码作用完全相同：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">B = A(:,:)</span><br><span class="line">B = A</span><br></pre></td></tr></table></figure>
+
+<p>同理，矩阵的子矩阵可以用相同方式赋值，不再赘述。</p>
+<h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>如果要在多个<code>function</code>中使用同一变量，需在使用到该变量的文件中声明全局变量：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">global</span> var</span><br></pre></td></tr></table></figure>
+
+<p>注意全局变量效率较低且难以debug，仅在必要时使用。</p>
+<hr>
+<h2 id="逻辑"><a href="#逻辑" class="headerlink" title="逻辑"></a>逻辑</h2><p>Matlab代码块格式类似于<code>Python</code>，以缩进（四个空格）代表结构关系，但用<code>end</code>表示逻辑块结束。</p>
+<h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><p>表达条件逻辑的判断语句基本结构：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> condition</span><br><span class="line">    statement;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>二分支的结构如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> condition</span><br><span class="line">    statement1;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    statement2;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>condition</code>为返回真伪的逻辑表达式，参照后文<code>运算</code>部分的<code>关系和逻辑运算符</code>。</li>
+</ul>
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><p>循环逻辑的基本结构：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> prog</span><br><span class="line">    statement;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>对于计数的循环，借助冒号表达式实现即可。</p>
+<p>$Eg.$ 输出1~10：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:<span class="number">10</span></span><br><span class="line">    <span class="built_in">disp</span>(<span class="built_in">i</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>非<code>Matlab</code>内置函数在调用前应当预先定义，否则将出现错误。函数的结构如下：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>=<span class="title">name</span><span class="params">(var)</span></span></span><br><span class="line">    statement;</span><br><span class="line">    f=var_return; <span class="comment">%返回函数值</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>若需传入多个参数，可用逗号隔开多个变量：<code>f=name(var1,var2,var3)</code>；</li>
+<li><strong>向函数<code>f</code>赋值以返回函数值</strong>。若需返回多个值，组合为向量返回：<code>f=[re1,re2]</code>；</li>
+<li>将函数封装为<code>.m</code>文件，需保证函数名称<code>(name)</code>与文件名一致；</li>
+<li>若一个文件内定义和调用了多个函数，其定义放在调用的后面。</li>
+</ul>
+<p>$Eg.$ 定义计算两数和与差的函数：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>=<span class="title">calc</span><span class="params">(a,b)</span></span></span><br><span class="line">    f=[add(a,b),dif(a,b)]; <span class="comment">%调用</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>=<span class="title">add</span><span class="params">(a,b)</span> %定义</span></span><br><span class="line">    f=a+b;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>=<span class="title">dif</span><span class="params">(a,b)</span></span></span><br><span class="line">    f=a-b;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><h3 id="Matlab运算符"><a href="#Matlab运算符" class="headerlink" title="Matlab运算符"></a>Matlab运算符</h3><h4 id="算术运算符"><a href="#算术运算符" class="headerlink" title="算术运算符"></a>算术运算符</h4><table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">运算</th>
+<th align="center">更多信息（文档）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong><code>+</code></strong></td>
+<td align="center">加法</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/plus.html"><code>plus</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>+</code></strong></td>
+<td align="center">一元加法</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/uplus.html"><code>uplus</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>-</code></strong></td>
+<td align="center">减法</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/minus.html"><code>minus</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>-</code></strong></td>
+<td align="center">一元减法</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/uminus.html"><code>uminus</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>.\*</code></strong></td>
+<td align="center">按元素乘法</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/times.html"><code>times</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>\*</code></strong></td>
+<td align="center">矩阵乘法</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/mtimes.html"><code>mtimes</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>./</code></strong></td>
+<td align="center">按元素右除</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/rdivide.html"><code>rdivide</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>/</code></strong></td>
+<td align="center">矩阵右除</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/mrdivide.html"><code>mrdivide</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>.\</code></strong></td>
+<td align="center">按元素左除</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/ldivide.html"><code>ldivide</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>\</code></strong></td>
+<td align="center">矩阵左除</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/mldivide.html"><code>mldivide</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>.^</code></strong></td>
+<td align="center">按元素求幂</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/power.html"><code>power</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>^</code></strong></td>
+<td align="center">矩阵幂</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/mpower.html"><code>mpower</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>.&#39;</code></strong></td>
+<td align="center">转置</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/transpose.html"><code>transpose</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>&#39;</code></strong></td>
+<td align="center">复共轭转置</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/ctranspose.html"><code>ctranspose</code></a></td>
+</tr>
+</tbody></table>
+<h4 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h4><table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">运算</th>
+<th align="center">更多信息（文档）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong><code>==</code></strong></td>
+<td align="center">等于</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/eq.html"><code>eq</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>~=</code></strong></td>
+<td align="center">不等于</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/ne.html"><code>ne</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>&gt;</code></strong></td>
+<td align="center">大于</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/gt.html"><code>gt</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>&gt;=</code></strong></td>
+<td align="center">大于或等于</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/ge.html"><code>ge</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>&lt;</code></strong></td>
+<td align="center">小于</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/lt.html"><code>lt</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>&lt;=</code></strong></td>
+<td align="center">小于或等于</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/le.html"><code>le</code></a></td>
+</tr>
+</tbody></table>
+<h4 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h4><table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">角色</th>
+<th align="center">更多信息（文档）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong><code>&amp;</code></strong></td>
+<td align="center">计算逻辑 AND</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/and.html"><code>and</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>|</code></strong></td>
+<td align="center">计算逻辑 OR</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/or.html"><code>or</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>&amp;&amp;</code></strong></td>
+<td align="center">计算逻辑 AND（具有短路功能）</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/logicaloperatorsshortcircuit.html"><code>Logical Operators: Short-Circuit &amp;&amp; ||</code></a></td>
+</tr>
+<tr>
+<td align="center"><strong><code>||</code></strong></td>
+<td align="center">计算逻辑 OR（具有短路功能）</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><strong><code>~</code></strong></td>
+<td align="center">计算逻辑 NOT</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/not.html"><code>not</code></a></td>
+</tr>
+</tbody></table>
+<h3 id="常数与基本函数"><a href="#常数与基本函数" class="headerlink" title="常数与基本函数"></a>常数与基本函数</h3><p>数学常数和基本函数内容较多，参照<a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/mathematics.html">MathWorks官方文档</a>。</p>
+<hr>
+<h2 id="IO和文件"><a href="#IO和文件" class="headerlink" title="IO和文件"></a>IO和文件</h2><p>对于已有的存储Matlab变量数据的<code>.m</code>文件，可用<code>load()</code>函数载入：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">load(filename)</span><br><span class="line">load(filename,variables)</span><br></pre></td></tr></table></figure>
+
+<p>后者仅从文件中载入指定的变量。</p>
+<p>同理可用<code>save()</code>函数将变量保存至文件：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">save(filename)</span><br><span class="line">save(filename,variables)</span><br></pre></td></tr></table></figure>
+
+<p>前者保存工作区所有变量，后者仅保存指定变量。</p>
+<p>其他处理变量和文件的函数如下：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/matlab.io.matfile.html"><code>matfile</code></a></td>
+<td>访问和更改 MAT 文件中的变量，而不必将文件加载到内存中</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/disp.html"><code>disp</code></a></td>
+<td>显示变量的值</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/formatteddisplaytext.html"><code>formattedDisplayText</code></a></td>
+<td>以字符串形式捕获显示输出</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/who.html"><code>who</code></a></td>
+<td>列出工作区中的变量</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/whos.html"><code>whos</code></a></td>
+<td>列出工作区中的变量及大小和类型</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/clear.html"><code>clear</code></a></td>
+<td>从工作区中删除项目、释放系统内存</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/clearvars.html"><code>clearvars</code></a></td>
+<td>清除内存中的变量</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://ww2.mathworks.cn/help/matlab/ref/openvar.html"><code>openvar</code></a></td>
+<td>在变量编辑器或其他图形编辑工具中打开工作区变量</td>
+</tr>
+</tbody></table>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Matlab Basic</p><p><a href="https://byter.ink/Code/2022/matlab-0/">https://byter.ink/Code/2022/matlab-0/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Byter</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2022-01-18</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2022-08-21</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tag/Matlab/">Matlab</a><a class="link-muted mr-2" rel="tag" href="/tag/Modeling/">Modeling</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/Tech/2022/n5105-0/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">【软路由日志】零——PVE虚拟化环境</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/Thoughts/2021/nonsense-1/"><span class="level-item">【胡思】之壹 半个答案</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="Byter"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Byter</p><p class="is-size-6 is-block">Mathematics &amp; AI</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>39.908°N,116.398°E | Earth</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">8</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">9</p></a></div></div></nav></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#数据与变量"><span class="level-left"><span class="level-item">1</span><span class="level-item">数据与变量</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#矩阵"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">矩阵</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#定义矩阵"><span class="level-left"><span class="level-item">1.1.1</span><span class="level-item">定义矩阵</span></span></a></li><li><a class="level is-mobile" href="#矩阵的元素"><span class="level-left"><span class="level-item">1.1.2</span><span class="level-item">矩阵的元素</span></span></a></li></ul></li><li><a class="level is-mobile" href="#全局变量"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">全局变量</span></span></a></li></ul></li><li><a class="level is-mobile" href="#逻辑"><span class="level-left"><span class="level-item">2</span><span class="level-item">逻辑</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#条件"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">条件</span></span></a></li><li><a class="level is-mobile" href="#循环"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">循环</span></span></a></li><li><a class="level is-mobile" href="#函数"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">函数</span></span></a></li></ul></li><li><a class="level is-mobile" href="#运算"><span class="level-left"><span class="level-item">3</span><span class="level-item">运算</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Matlab运算符"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">Matlab运算符</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#算术运算符"><span class="level-left"><span class="level-item">3.1.1</span><span class="level-item">算术运算符</span></span></a></li><li><a class="level is-mobile" href="#关系运算符"><span class="level-left"><span class="level-item">3.1.2</span><span class="level-item">关系运算符</span></span></a></li><li><a class="level is-mobile" href="#逻辑运算符"><span class="level-left"><span class="level-item">3.1.3</span><span class="level-item">逻辑运算符</span></span></a></li></ul></li><li><a class="level is-mobile" href="#常数与基本函数"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">常数与基本函数</span></span></a></li></ul></li><li><a class="level is-mobile" href="#IO和文件"><span class="level-left"><span class="level-item">4</span><span class="level-item">IO和文件</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/category/Blog/"><span class="level-start"><span class="level-item">Blog</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/category/Code/"><span class="level-start"><span class="level-item">Code</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/category/Tech/"><span class="level-start"><span class="level-item">Tech</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/category/Thoughts/"><span class="level-start"><span class="level-item">Thoughts</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/category/Whatever/"><span class="level-start"><span class="level-item">Whatever</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></div></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/arch/2022/"><span class="level-start"><span class="level-item">2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/arch/2021/"><span class="level-start"><span class="level-item">2021</span></span><span class="level-end"><span class="level-item tag">5</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tag/Hardware/"><span class="tag">Hardware</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Hexo/"><span class="tag">Hexo</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Introspection/"><span class="tag">Introspection</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tag/M-C/"><span class="tag">M&amp;C</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Matlab/"><span class="tag">Matlab</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Modeling/"><span class="tag">Modeling</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Network/"><span class="tag">Network</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Nonsense/"><span class="tag">Nonsense</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tag/Private/"><span class="tag">Private</span><span class="tag">2</span></a></div></div></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Hexo</span></span><span class="level-right"><span class="level-item tag">hexo.io</span></span></a></li><li><a class="level is-mobile" href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Icarus</span></span><span class="level-right"><span class="level-item tag">github.com</span></span></a></li><li><a class="level is-mobile" href="https://ppoffice.github.io/hexo-theme-icarus/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Docs</span></span><span class="level-right"><span class="level-item tag">ppoffice.github.io</span></span></a></li></ul></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Byter | Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Byter</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p><p class="is-size-7">© 2023</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
