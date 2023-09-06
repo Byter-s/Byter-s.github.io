@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Review on Open-Vocabulary - Byter | Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Byter | Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Byter | Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Open-Vocabulary相关文章的调研和模型回顾。"><meta property="og:type" content="blog"><meta property="og:title" content="Review on Open-Vocabulary"><meta property="og:url" content="https://byter.ink/Academic/2023/paper-review-ov/"><meta property="og:site_name" content="Byter | Blog"><meta property="og:description" content="Open-Vocabulary相关文章的调研和模型回顾。"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://byter.ink/gallery/covers/research.png"><meta property="article:published_time" content="2023-08-09T16:00:00.000Z"><meta property="article:author" content="Byter"><meta property="article:tag" content="AI"><meta property="article:tag" content="CV"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://byter.ink/gallery/covers/research.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://byter.ink/Academic/2023/paper-review-ov/"},"headline":"Review on Open-Vocabulary","image":["https://byter.ink/gallery/covers/research.png"],"datePublished":"2023-08-09T16:00:00.000Z","author":{"@type":"Person","name":"Byter"},"publisher":{"@type":"Organization","name":"Byter | Blog","logo":{"@type":"ImageObject","url":"https://byter.ink/img/logo.svg"}},"description":"Open-Vocabulary相关文章的调研和模型回顾。"}</script><link rel="canonical" href="https://byter.ink/Academic/2023/paper-review-ov/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Byter | Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/arch">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Todo List" href="/todo"><i class="fa fa-sticky-note"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Have fun!" href="/404"><i class="fas fa-cat"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Footprints" href="/map"><i class="fas fa-shoe-prints"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/gallery/covers/research.png" alt="Review on Open-Vocabulary"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-08-09T16:00:00.000Z" title="2023/8/10 00:00:00">2023-08-10</time></span><span class="level-item"><a class="link-muted" href="/categories/Academic/">Academic</a></span><span class="level-item">26 minutes read (About 3926 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">Review on Open-Vocabulary</h1><div class="content"><p>Open-Vocabulary相关文章的调研和模型回顾。</p>
+<span id="more"></span>
+
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="Open-Vocabulary"><a href="#Open-Vocabulary" class="headerlink" title="Open Vocabulary"></a>Open Vocabulary</h2><p>利用已有的预训练模型，如语言大模型（LLM）和视觉语言模型（VLM）中学习的先验知识，在闭集模型上实现open能力。无需重复在大规模数据集上重复训练不同模型，节约成本。</p>
+<p><img src="/gallery/img/ov-review/open.png" alt="Open"></p>
+<h2 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h2><ul>
+<li>object detection<br>检测画面中目标，bunny-box</li>
+<li>segmentation<br>semantic: 关注像素属于何个类别<br>instance: 关注像素属于何个实例</li>
+<li>video understanding<br>主要是视频的物体跟踪、物体分割</li>
+<li>3D scene understanding<br>主要是3D检测&#x2F;分割和场景理解，3D+text等跨模态任务</li>
+</ul>
+<p><img src="/gallery/img/ov-review/seg-det.png" alt="Segentation and detection"></p>
+<h2 id="学习方式"><a href="#学习方式" class="headerlink" title="学习方式"></a>学习方式</h2><ul>
+<li>Close-set learning<br>训练集和测试集共享同样的类别&#x2F;Label space；<br>不可处理新的类别</li>
+<li>Open-set learning<br>测试集上存在新的类别，将其拒绝为未知一类。</li>
+<li>Zero-shot learning<br>测试集上存在新的类别，模型预测并分类新的类别。训练时未知类别严格不可获得。<br><strong>局限</strong>：训练时缺少未知类别的样本，易被当作背景；因此推理时过多依赖词嵌入，未知类的视觉信息利用不充分。</li>
+<li>Few-shot learning<br>用少量样本提升识别性能。</li>
+<li>Open-vocabulary learning<br>训练时可用大规模的语言词汇（类别）知识，可用预训练VLM区分未知类。（与ZSL相比）可以利用视觉相关的语言数据进行辅助监督。<br><strong>优势</strong>：语言数据的标注成本更低，image caption容易获得；语言数据的类别规模更大，利于泛化</li>
+</ul>
+<h2 id="识别和分割"><a href="#识别和分割" class="headerlink" title="识别和分割"></a>识别和分割</h2><h3 id="Few-shot"><a href="#Few-shot" class="headerlink" title="Few-shot"></a>Few-shot</h3><p>Few-Shot Semantic Segmentation：对查询图像进行像素层面的分割；</p>
+<p>Few-Shot Instance Segmentation：用少量样本识别和分割对象。分为单分支和多分支方法。</p>
+<h3 id="Zero-shot"><a href="#Zero-shot" class="headerlink" title="Zero-shot"></a>Zero-shot</h3><p>判别方法和生成式方法。</p>
+<ul>
+<li>SPNet: 将像素映射到语义词嵌入空间，将像素特征投影到类别的概率。</li>
+<li>ZS3Net: 生成式模型，根据词嵌入生成未知类别的像素特征。</li>
+</ul>
+<p>上述方法鲁棒性差，因为词嵌入更多针对物体对象而非像素</p>
+<ul>
+<li>PADing：提出了三种segment的统一框架</li>
+</ul>
+<h1 id="预训练大模型"><a href="#预训练大模型" class="headerlink" title="预训练大模型"></a>预训练大模型</h1><h2 id="NLP"><a href="#NLP" class="headerlink" title="NLP"></a>NLP</h2><h3 id="任务-1"><a href="#任务-1" class="headerlink" title="任务"></a>任务</h3><ul>
+<li>Language Modeling (LM):</li>
+<li>Mask Language Modeling (MLM): 随机用MASK掩盖单词，在预训练时学习预测MASK<br>例如BERT使用MLM预训练。</li>
+<li>Denoising AutoEncoder (DAE): 在原始语料中加入噪声，学习进行重组<br>BART采用自编码器。</li>
+<li>Next Sentence Prediction (NSP): 训练模型理解语句之间的关系。输入两个不同句子，学习正确预测顺序<br>BERT使用NSP预训练。</li>
+<li>Sentence Order Prediction (SOP): 和NSP相比使用交换顺序的句子作为负例<br>例如ALBERT使用该任务预训练。</li>
+</ul>
+<h3 id="模型-结构"><a href="#模型-结构" class="headerlink" title="模型&#x2F;结构"></a>模型&#x2F;结构</h3><ul>
+<li>BERT<br>Transformer encoder结构，双向编码器。预测masked单词和句子是否上下文。词嵌入为上下文<br>缺点：文本双向编码，但缺少的token独立预测，因此泛化性能不强；预训练任务和生成任务不同</li>
+<li>GPT<br>Transformer decoder结构，自回归解码器提取特征。zero&#x2F;few-shot prompt建模<br>训练时根据前文预测下一个单词，微调以用于下游任务。词嵌入为概率<br>缺点：仅用上文预测下文，不能学习双向信息</li>
+<li>BART<br>encoder-decoder结构，去噪自编码器的seq2seq模型。<br>用加噪再重建的方式预训练。词嵌入：上下文编码器，自回归解码器<br>加噪声方式：mask单个词&#x2F;删除词&#x2F;mask扩展长度&#x2F;句子重排&#x2F;文档重排</li>
+</ul>
+<h3 id="其他预训练模型"><a href="#其他预训练模型" class="headerlink" title="其他预训练模型"></a>其他预训练模型</h3><p><img src="/gallery/img/ov-review/pretrained.png" alt="Pretrained models"></p>
+<h2 id="CV"><a href="#CV" class="headerlink" title="CV"></a>CV</h2><h3 id="CLIP"><a href="#CLIP" class="headerlink" title="CLIP"></a>CLIP</h3><ul>
+<li>核心思路：通过在大规模图像-文本数据集上进行对比学习,使模型将语义相关的图像特征和文本特征映射到同一个多模态的特征空间。</li>
+<li>结构<br>图像encoder：使用传统的卷积神经网络ResNet和Vision Transformer(ViT)提取图像特征<br>文本encoder：Transformer结构</li>
+<li>过程<br>把图像文本对分别输入图像和文本的编码器，产生图像特征和文本特征；将特征用内积&#x2F;余弦相似度计算匹配程度；用匹配的作为正例、不匹配作为负例，越匹配loss越小，计算损失；</li>
+</ul>
+<p>CLIP实现图像特征和文本特征的对齐，得到通用的语义表示。从图像-文本对中学习的知识可以用于下游任务，open vocabulary学习，zero-shot任务和其他3D任务。</p>
+<h3 id="CV中的预训练模型汇总"><a href="#CV中的预训练模型汇总" class="headerlink" title="CV中的预训练模型汇总"></a>CV中的预训练模型汇总</h3><p><img src="/gallery/img/ov-review/cv.png" alt="CV models"></p>
+<h1 id="方法和模型"><a href="#方法和模型" class="headerlink" title="方法和模型"></a>方法和模型</h1><h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><h3 id="基于像素的检测-分割"><a href="#基于像素的检测-分割" class="headerlink" title="基于像素的检测&#x2F;分割"></a>基于像素的检测&#x2F;分割</h3><p>分为语义层面的、实例层面的。</p>
+<ul>
+<li>Semantic segmentation:<br>一般基于FCN及其改进方法；用Transformer结构代替了CNN预测头</li>
+<li>Instance detection:<br>两阶段方法：由RPN对前景对象打分，高分的对象再由检测头细化。能更好识别前景，多用于open vocabulary物体检测中<br>一阶段方法：逐像素方法输出识别框和标签；加上焦点损失&#x2F;特征金字塔网络，效果有时更好</li>
+<li>Instance segmentation: 比检测更进一步，关注如何表示实例的mask。<br>从上到下：基于detector再加上额外的mask head；表现取决于detector<br>从下往上：根据实例的semantic segmentation进行实例聚类，产生mask；表现取决于分隔结果和聚类方式</li>
+</ul>
+<h3 id="基于查询的检测-分割"><a href="#基于查询的检测-分割" class="headerlink" title="基于查询的检测&#x2F;分割"></a>基于查询的检测&#x2F;分割</h3><p>基于Transformer的方法更简洁和统一。</p>
+<ul>
+<li>Detection Transformer: CNN为主干，加上Transformer的encoder和decoder，用对象查询代替了anchor</li>
+</ul>
+<p>object query: 训练时建立一个一一映射，基于预测的映射和GT的误差（由label&#x2F;box&#x2F;mask的误差构成）:</p>
+<ul>
+<li>对于detection: 分类误差和box回归误差</li>
+<li>对于instance-wised segmentation: 分类误差和分割误差</li>
+</ul>
+<p>不可直接检测新的类别，但是常用于open-vocabulary中基本的检测器和分割器</p>
+<h3 id="大规模VLP"><a href="#大规模VLP" class="headerlink" title="大规模VLP"></a>大规模VLP</h3><ul>
+<li>two-stream neural networks：基于视觉Transformer模型，分别处理视觉和语言信息，并由另一个Transformer结构（交叉注意力）融合</li>
+<li>CLIP&#x2F;Align：在图像-文本对上的大规模预训练，表明匹配图像和caption已经可以产生强泛化的模型</li>
+</ul>
+<p>Open vocabulary在相关任务中利用VLP蕴含的视觉-文本知识。</p>
+<h2 id="Open-Vocabulary-Object-Detection"><a href="#Open-Vocabulary-Object-Detection" class="headerlink" title="Open Vocabulary Object Detection"></a>Open Vocabulary Object Detection</h2><h3 id="知识蒸馏"><a href="#知识蒸馏" class="headerlink" title="知识蒸馏"></a>知识蒸馏</h3><p>利用VLM，将其知识（新的类别）蒸馏给闭集detector。</p>
+<ul>
+<li>ViLD：有text和image两个分支。<br>text：文本嵌入由VLM的文本编码器获得<br>image：先由一个detector获得区域嵌入，再将裁剪的图像送入VLM的视觉编码器得到图像嵌入</li>
+<li>HierKD：利用单阶段detector，提出全局的语言-视觉知识蒸馏模块</li>
+</ul>
+<p>上述两种都使用基于像素的检测器。可以换用基于查询的检测器，需引入detector 区域表示和CLIP区域表示的嵌入匹配误差IMP。</p>
+<ul>
+<li>OADP：认为只能蒸馏物体层面的知识给下游detector，提出了全局&#x2F;区块蒸馏的方式。</li>
+</ul>
+<p>利用更细粒度的信息（属性&#x2F;描述&#x2F;关系）:</p>
+<ul>
+<li>PCL：使用一个Caption模型给实例生成更详细的描述</li>
+</ul>
+<p><img src="/gallery/img/ov-review/PCL.png" alt="PCL"></p>
+<ul>
+<li>OVRNet：在开放词汇场景中同时检测物体和视觉属性</li>
+</ul>
+<h3 id="区域文本预训练"><a href="#区域文本预训练" class="headerlink" title="区域文本预训练"></a>区域文本预训练</h3><p>区域文本对齐，将视觉特征的新类别和文本特征映射到一个对齐特征空间。</p>
+<ul>
+<li>OVR-CNN：使用caption数据进行open vocabulary的新类别检测<br>过程：训练一个ResNet；用图像-文本对训练一个V2L层，将特征从视觉空间映射到语义空间，不受标签闭集的限制。<br>把可学习的分类器替换为预训练模型的text encoder；RoI得到区域视觉特征送入V2L层映射到语义空间；</li>
+<li>Attribute-Sensitive OVR-CNN：对齐视觉区域和BERT输出的上下文单词嵌入<br>使用一种采样策略，增强模型对caption中形容词&#x2F;动词短语&#x2F;位置短语的敏感</li>
+<li>RegionCLIP：通过匹配图像区域和区域层面的描述，学习区域特征表示<br>过程：用CLIP给区域-文本对产生pseudo标签，用对比误差进行匹配后，再用人类标注数据集微调视觉编码器</li>
+</ul>
+<h3 id="Prompting建模"><a href="#Prompting建模" class="headerlink" title="Prompting建模"></a>Prompting建模</h3><p>使基础模型适应不同领域的方法。将学习到的提示融入基础模型中，模型能将其知识迁移到下游任务中。</p>
+<p>prompts输入VLM的编码器得到类别名称的嵌入，但负例不属于任何类别。</p>
+<ul>
+<li>PromptDet：在prompt中引入类别的描述，以及考虑类比名称出现的位置。</li>
+<li>DETR：提示基于CLIP的区域分类器的区域特征，缩小整幅图像和区域分布之间的差距</li>
+<li>CORA：通过对类别敏感匹配机制，学习可泛化的localization</li>
+</ul>
+<h3 id="其他模型汇总"><a href="#其他模型汇总" class="headerlink" title="其他模型汇总"></a>其他模型汇总</h3><p><img src="/gallery/img/ov-review/ov-det.png" alt="Open-Vocabulary detection"></p>
+<h2 id="Open-Vocabulary-Segmentation"><a href="#Open-Vocabulary-Segmentation" class="headerlink" title="Open Vocabulary Segmentation"></a>Open Vocabulary Segmentation</h2><p>视觉-文本大模型用于语义分割，以提高识别和分割性能；可看做一种稠密的分类任务。常用CLIP作为VLM。</p>
+<ul>
+<li>LSeg:<br>对齐了类别标签的文本嵌入和输入图像的嵌入，因此利用VLM的泛化性能分割没有定义的物体，实现open</li>
+<li>Fusioner:<br>用self-attention算子，通过基于Transformer的框架融合视觉和语言</li>
+<li>ZegFormer<br>将分割任务视为：不考虑类别的分割+得到mask的分类<br>使用VLM中的label嵌入对分类mask，使用CLIP - Vision编码器来得到语言对齐的视觉特征。</li>
+<li>MaskCLIP<br>在预训练CLIP中加入一个mask attention模块，利用CLIP的特征更有效</li>
+<li>TagCLIP<br>提出了一个可信token模块，在像素分类前先提前预测包含物体的像素，避免错误识别的像素被分到新类别</li>
+</ul>
+<p>也可利用扩散模型的文本-图像的泛化能力进行open的分割，如ODISE、OVDiff。OVDiff进行mask分类时用训练好的Diffusion生成各种类别的基本图像，并进行最优匹配以确定类别。</p>
+<h3 id="其他模型汇总-1"><a href="#其他模型汇总-1" class="headerlink" title="其他模型汇总"></a>其他模型汇总</h3><p><img src="/gallery/img/ov-review/ov-seg.png" alt="Open-Vocabulary segmentation"></p>
+<h2 id="Open-Vocabulary-Video-Understanding"><a href="#Open-Vocabulary-Video-Understanding" class="headerlink" title="Open Vocabulary Video Understanding"></a>Open Vocabulary Video Understanding</h2><p>VLM的视觉知识用于物体追踪和实例分隔，基于closed追踪器构建open追踪器。</p>
+<ul>
+<li>OVTrack<br>引入大型VLM处理open vocabulary的多目标追踪。利用RPN打分得到RoI区域，再通过CLIP进行知识蒸馏。采用单独的追踪头</li>
+</ul>
+<p>视频实例分割任务：</p>
+<ul>
+<li>MindVLT<br>采用固定的CLIP主干。提出使用open vocabulary分类器来分割和跟踪未知类别，从而泛化到新类别。</li>
+<li>OpenVIS<br>和上面的方式不同。为实例生成与类别无关mask，利用这个mask裁剪原始图像，输入CLIP-vision的编码器计算类别分数。</li>
+</ul>
+<h2 id="Open-Vocabulary-3D-Understanding"><a href="#Open-Vocabulary-3D-Understanding" class="headerlink" title="Open Vocabulary 3D Understanding"></a>Open Vocabulary 3D Understanding</h2><h3 id="3D识别"><a href="#3D识别" class="headerlink" title="3D识别"></a>3D识别</h3><p>VLM可通过图像-文本对训练，在2D上zero-shot&#x2F;few-shot学习。但3D上的点-文本对不好获得。</p>
+<ul>
+<li>PointCLIP<br>本质是把3D点云转换为CLIP可识别的图像，从而利用CLIP的知识识别open的类别。<br>过程：三维点云投影到二维平面，CLIP视觉编码器从投影的深度图中提取视觉特征，从对齐而点云特征和语言编码器提取的语言特征<br><strong>缺点：</strong>直接投影为2D深度图会导致较差的性能</li>
+</ul>
+<p>改进的模型：</p>
+<ul>
+<li>CLIP2Point<br>通过对比学习，对齐了CLIP图像编码器得到的RGB图像特征和一个深度信息编码器得到的深度特征。<br>采集图像-深度对用来训练上面两个编码器，推理时只利用深度encoder。于是再通过CLIP本身对齐的图像特征和文本特征，<strong>深度特征就和文本特征对齐</strong>了。</li>
+<li>PointCLIP v2<br>提出了一种更真实的3D点云到2D的形状投影，以及基于LLM的3D prompt生成方案，在没有额外注释下性能显著提高。</li>
+</ul>
+<p>投影会损失信息，无法完整利用3D点云的信息。一些新的方法：</p>
+<ul>
+<li>ULIP<br>收集多模态三元组(点云、图像和文本)来训练3D主干。<br>CLIP对齐了语言和图像编码器，因此ULIP只需将3D主干对齐到图像-语言特征空间。<br><strong>优点</strong>：统一点云、图像和文本三种模态，可用于更多下游任务，比如文本检索3D物体（text2point）；对齐3D和2D带来了原生的3D上的open vocabulary能力<br>缺点：需要在收集得多模态三元组上训练，规模太小</li>
+<li>OpenShape<br>扩展了数据集和结构主干。提出了一个文本-3D形状的87万规模的数据集，超过一千个类别；使用了更大的3D主干<br>提高了3D zero-shot能力</li>
+</ul>
+<h3 id="3D物体检测"><a href="#3D物体检测" class="headerlink" title="3D物体检测"></a>3D物体检测</h3><p>3D物体检测的训练集难以获取，因此大多数closed-set检测器难以泛化到新的类别上。</p>
+<ul>
+<li>OV-3DETIC和OV3DET<br>将检测任务解耦为定位和识别任务。于是定位任务可以采用预训练的2D检测器，反向投影形成3D的包围盒实现定位。识别任务则将3D和2D编码器的区域特征和对应的文本特征对齐。这一步使得推理时可以用CLIP中的知识泛化到新的类别上。</li>
+</ul>
+<h3 id="3D场景理解"><a href="#3D场景理解" class="headerlink" title="3D场景理解"></a>3D场景理解</h3><p>同样面临缺少从同一个场景中获取点云-文本对数据的问题。</p>
+<ul>
+<li>PLA<br>从多视角图片中提取特征，再用语言大模型生成描述来获得语言特征，进行对齐。</li>
+<li>OpenScene<br>思路是将每个点的三维特征与每个像素的CLIP特征联系起来。将2D像素反向投影到3D空间，把点云中的每个点与不同视图中的几个像素的特征进行集成。</li>
+<li>PartSLIP和SATR：直接把3D点云和网格投影到2D平面，利用GLIP进行定位和分割。</li>
+<li>OpenMask3D：主要是3D分割任务，利用了多个大模型<br>选择视图然后把3D mask投影为2D图像。2D mask通过SAM进一步细化。最后联合CLIP语言编码器，把2D mask输入到CLIP视觉编码器中生成标签预测。</li>
+</ul>
+<hr>
+<p>参考文献：</p>
+<p>[1] Wu, J., Li, X., Yuan, H., Ding, H., Yang, Y., Li, X., Zhang, J., Tong, Y., Jiang, X., Ghanem, B., &amp; Tao, D. (2023). Towards Open Vocabulary Learning: A Survey. <em>ArXiv, abs&#x2F;2306.15880</em>.</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Review on Open-Vocabulary</p><p><a href="https://byter.ink/Academic/2023/paper-review-ov/">https://byter.ink/Academic/2023/paper-review-ov/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Byter</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2023-08-10</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/AI/">AI</a><a class="link-muted mr-2" rel="tag" href="/tags/CV/">CV</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/Tech/2023/mac-1/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Mac装修日志</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/Blog/2023/blog_config/"><span class="level-item">Hexo食用指南</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#概述"><span class="level-left"><span class="level-item">1</span><span class="level-item">概述</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Open-Vocabulary"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">Open Vocabulary</span></span></a></li><li><a class="level is-mobile" href="#任务"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">任务</span></span></a></li><li><a class="level is-mobile" href="#学习方式"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">学习方式</span></span></a></li><li><a class="level is-mobile" href="#识别和分割"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">识别和分割</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Few-shot"><span class="level-left"><span class="level-item">1.4.1</span><span class="level-item">Few-shot</span></span></a></li><li><a class="level is-mobile" href="#Zero-shot"><span class="level-left"><span class="level-item">1.4.2</span><span class="level-item">Zero-shot</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#预训练大模型"><span class="level-left"><span class="level-item">2</span><span class="level-item">预训练大模型</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#NLP"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">NLP</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#任务-1"><span class="level-left"><span class="level-item">2.1.1</span><span class="level-item">任务</span></span></a></li><li><a class="level is-mobile" href="#模型-结构"><span class="level-left"><span class="level-item">2.1.2</span><span class="level-item">模型/结构</span></span></a></li><li><a class="level is-mobile" href="#其他预训练模型"><span class="level-left"><span class="level-item">2.1.3</span><span class="level-item">其他预训练模型</span></span></a></li></ul></li><li><a class="level is-mobile" href="#CV"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">CV</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#CLIP"><span class="level-left"><span class="level-item">2.2.1</span><span class="level-item">CLIP</span></span></a></li><li><a class="level is-mobile" href="#CV中的预训练模型汇总"><span class="level-left"><span class="level-item">2.2.2</span><span class="level-item">CV中的预训练模型汇总</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#方法和模型"><span class="level-left"><span class="level-item">3</span><span class="level-item">方法和模型</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#前置知识"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">前置知识</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#基于像素的检测-分割"><span class="level-left"><span class="level-item">3.1.1</span><span class="level-item">基于像素的检测/分割</span></span></a></li><li><a class="level is-mobile" href="#基于查询的检测-分割"><span class="level-left"><span class="level-item">3.1.2</span><span class="level-item">基于查询的检测/分割</span></span></a></li><li><a class="level is-mobile" href="#大规模VLP"><span class="level-left"><span class="level-item">3.1.3</span><span class="level-item">大规模VLP</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Open-Vocabulary-Object-Detection"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">Open Vocabulary Object Detection</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#知识蒸馏"><span class="level-left"><span class="level-item">3.2.1</span><span class="level-item">知识蒸馏</span></span></a></li><li><a class="level is-mobile" href="#区域文本预训练"><span class="level-left"><span class="level-item">3.2.2</span><span class="level-item">区域文本预训练</span></span></a></li><li><a class="level is-mobile" href="#Prompting建模"><span class="level-left"><span class="level-item">3.2.3</span><span class="level-item">Prompting建模</span></span></a></li><li><a class="level is-mobile" href="#其他模型汇总"><span class="level-left"><span class="level-item">3.2.4</span><span class="level-item">其他模型汇总</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Open-Vocabulary-Segmentation"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">Open Vocabulary Segmentation</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#其他模型汇总-1"><span class="level-left"><span class="level-item">3.3.1</span><span class="level-item">其他模型汇总</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Open-Vocabulary-Video-Understanding"><span class="level-left"><span class="level-item">3.4</span><span class="level-item">Open Vocabulary Video Understanding</span></span></a></li><li><a class="level is-mobile" href="#Open-Vocabulary-3D-Understanding"><span class="level-left"><span class="level-item">3.5</span><span class="level-item">Open Vocabulary 3D Understanding</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#3D识别"><span class="level-left"><span class="level-item">3.5.1</span><span class="level-item">3D识别</span></span></a></li><li><a class="level is-mobile" href="#3D物体检测"><span class="level-left"><span class="level-item">3.5.2</span><span class="level-item">3D物体检测</span></span></a></li><li><a class="level is-mobile" href="#3D场景理解"><span class="level-left"><span class="level-item">3.5.3</span><span class="level-item">3D场景理解</span></span></a></li></ul></li></ul></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Academic/"><span class="level-start"><span class="level-item">Academic</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Blog/"><span class="level-start"><span class="level-item">Blog</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Tech/"><span class="level-start"><span class="level-item">Tech</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Thoughts/"><span class="level-start"><span class="level-item">Thoughts</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Whatever/"><span class="level-start"><span class="level-item">Whatever</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/AI/"><span class="tag">AI</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CV/"><span class="tag">CV</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hardware/"><span class="tag">Hardware</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Introspection/"><span class="tag">Introspection</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/M-C/"><span class="tag">M&amp;C</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MATLAB/"><span class="tag">MATLAB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MacOS/"><span class="tag">MacOS</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Network/"><span class="tag">Network</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nonsense/"><span class="tag">Nonsense</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Paper/"><span class="tag">Paper</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Private/"><span class="tag">Private</span><span class="tag">2</span></a></div></div></div></div></div><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="Byter"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Byter</p><p class="is-size-6 is-block">Mathematics &amp; AI</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">12</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">12</p></a></div></div></nav></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Byter | Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Byter</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p><p class="is-size-7">滇ICP备2020007033号</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
