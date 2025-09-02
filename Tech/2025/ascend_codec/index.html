@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Video Codec - Byter | Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Byter | Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Byter | Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Ascend和Lambda集群上视频编解码后端的配置，还得是build from source :)"><meta property="og:type" content="blog"><meta property="og:title" content="Video Codec"><meta property="og:url" content="https://byter.ink/Tech/2025/ascend_codec/"><meta property="og:site_name" content="Byter | Blog"><meta property="og:description" content="Ascend和Lambda集群上视频编解码后端的配置，还得是build from source :)"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://byter.ink/assets/covers/codec.png"><meta property="article:published_time" content="2025-09-01T16:00:00.000Z"><meta property="article:author" content="Byter"><meta property="article:tag" content="AI"><meta property="article:tag" content="Linux"><meta property="article:tag" content="Ascend"><meta property="article:tag" content="CV"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://byter.ink/assets/covers/codec.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://byter.ink/Tech/2025/ascend_codec/"},"headline":"Video Codec","image":["https://byter.ink/assets/covers/codec.png"],"datePublished":"2025-09-01T16:00:00.000Z","author":{"@type":"Person","name":"Byter"},"publisher":{"@type":"Organization","name":"Byter | Blog","logo":{"@type":"ImageObject","url":"https://byter.ink/img/logo.svg"}},"description":"Ascend和Lambda集群上视频编解码后端的配置，还得是build from source :)"}</script><link rel="canonical" href="https://byter.ink/Tech/2025/ascend_codec/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="Byter | Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/arch">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Todo List" href="/todo"><i class="fa fa-sticky-note"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Have fun!" href="/404"><i class="fas fa-cat"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Footprints" href="/map"><i class="fas fa-shoe-prints"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/assets/covers/codec.png" alt="Video Codec"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2025-09-01T16:00:00.000Z" title="2/9/2025 上午12:00:00">2025-09-02</time></span><span class="level-item"><a class="link-muted" href="/categories/Tech/">Tech</a></span><span class="level-item">7 minutes read (About 1011 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">Video Codec</h1><div class="content"><p>Ascend和Lambda集群上视频编解码后端的配置，还得是build from source :)</p>
+<span id="more"></span>
+
+<h2 id="FFmpeg"><a href="#FFmpeg" class="headerlink" title="FFmpeg"></a>FFmpeg</h2><h3 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h3><p>集群上默认连接到头节点，无<code>sudo</code>权限，无GPU，有<code>nvcc</code>和<code>cuda</code>环境。自带的ffmpeg不支持NV硬件编解码器，因此需要手动编译且安装到用户目录下。</p>
+<ol>
+<li>设置环境变量</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 统一管理源码和安装位置</span></span><br><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$HOME</span>/src <span class="variable">$HOME</span>/local</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$HOME</span>/local/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$HOME</span>/local/lib:<span class="variable">$LD_LIBRARY_PATH</span></span><br><span class="line"><span class="built_in">export</span> PKG_CONFIG_PATH=<span class="variable">$HOME</span>/local/lib/pkgconfig:<span class="variable">$PKG_CONFIG_PATH</span></span><br></pre></td></tr></table></figure>
+<p>于是后续的所有包都会被安装在<code>~/local</code>下。</p>
+<ol start="2">
+<li>编译工具</li>
+</ol>
+<p>检查编译工具：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> gcc g++ make yasm cmake libtool wget unzip</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>编译不能使用全部线程（<code>make -j$(nproc)</code>），否则在头节点CPU占用过高会被Lambda踢出。</p>
+</blockquote>
+<p>如果缺少<code>cmake</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/src</span><br><span class="line">wget https://github.com/Kitware/CMake/releases/download/v3.30.0/cmake-3.30.0.tar.gz</span><br><span class="line">tar xzf cmake-3.30.0.tar.gz</span><br><span class="line"><span class="built_in">cd</span> cmake-3.30.0</span><br><span class="line">./bootstrap --prefix=<span class="variable">$HOME</span>/local</span><br><span class="line">make -j4</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>如果缺少<code>yasm</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/src</span><br><span class="line">wget http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz</span><br><span class="line">tar xzf yasm-1.3.0.tar.gz</span><br><span class="line"><span class="built_in">cd</span> yasm-1.3.0</span><br><span class="line">./configure --prefix=<span class="variable">$HOME</span>/local</span><br><span class="line">make -j4</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>如果缺少<code>libtool</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/src</span><br><span class="line">wget https://ftpmirror.gnu.org/libtool/libtool-2.4.7.tar.gz</span><br><span class="line">tar xzf libtool-2.4.7.tar.gz</span><br><span class="line"><span class="built_in">cd</span> libtool-2.4.7</span><br><span class="line">./configure --prefix=<span class="variable">$HOME</span>/local</span><br><span class="line">make -j4</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>安装依赖</li>
+</ol>
+<p>安装<code>numactl</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># numactl</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/src</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/numactl/numactl.git</span><br><span class="line"><span class="built_in">cd</span> numactl</span><br><span class="line">./autogen.sh</span><br><span class="line">./configure --prefix=<span class="variable">$HOME</span>/local</span><br><span class="line">make -j4</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>安装<code>nv-codec-headers</code>：</p>
+<blockquote>
+<p>NV硬件编解码器的支持</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nv-codec-headers</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/src</span><br><span class="line">git <span class="built_in">clone</span> https://git.videolan.org/git/ffmpeg/nv-codec-headers.git</span><br><span class="line"><span class="built_in">cd</span> nv-codec-headers</span><br><span class="line">make PREFIX=<span class="variable">$HOME</span>/local install</span><br></pre></td></tr></table></figure>
+
+<p>安装<code>nasm</code>：</p>
+<blockquote>
+<p>编译优化，不安装会报错<code>nasm not found or too old</code>或降低CPU解码性能</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/src</span><br><span class="line">wget https://www.nasm.us/pub/nasm/releasebuilds/2.16.03/nasm-2.16.03.tar.gz</span><br><span class="line">tar xzf nasm-2.16.03.tar.gz</span><br><span class="line"><span class="built_in">cd</span> nasm-2.16.03</span><br><span class="line">./configure --prefix=<span class="variable">$HOME</span>/local</span><br><span class="line">make -j4</span><br><span class="line">make install</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$HOME</span>/local/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+
+<ol start="4">
+<li>编译<code>FFmpeg</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="variable">$HOME</span>/src</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/FFmpeg/FFmpeg.git</span><br><span class="line">git checkout n6.1.3</span><br><span class="line"><span class="built_in">cd</span> FFmpeg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认应该存在</span></span><br><span class="line"><span class="comment"># CUDA_DIR=/cm/shared/apps/cuda12.8</span></span><br><span class="line"></span><br><span class="line">./configure \</span><br><span class="line">  --prefix=<span class="variable">$HOME</span>/local \</span><br><span class="line">  --enable-nonfree \</span><br><span class="line">  --enable-cuda-nvcc \</span><br><span class="line">  --enable-libnpp \</span><br><span class="line">  --extra-cflags=<span class="string">&quot;-fPIC -I<span class="variable">$CUDA_DIR</span>/include -I<span class="variable">$HOME</span>/local/include&quot;</span> \</span><br><span class="line">  --extra-ldflags=<span class="string">&quot;-L<span class="variable">$CUDA_DIR</span>/lib64 -L<span class="variable">$HOME</span>/local/lib&quot;</span> \</span><br><span class="line">  --disable-static \</span><br><span class="line">  --enable-shared</span><br><span class="line"></span><br><span class="line">make -j4</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证安装成功</span></span><br><span class="line"><span class="variable">$HOME</span>/local/bin/ffmpeg -encoders | grep nvenc</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>此处configure参考NVIDIA官方文档：<a target="_blank" rel="noopener" href="https://docs.nvidia.com/video-technologies/video-codec-sdk/12.0/ffmpeg-with-nvidia-gpu/index.html#compiling-for-linux">Using FFmpeg with NVIDIA GPU Hardware Acceleration</a></p>
+</blockquote>
+<blockquote>
+<p><strong>2025-09</strong>：</p>
+<ul>
+<li>安装6.1.3是为了满足TorchCodec的依赖（4.0～7.0），但由于对7.0有兼容性问题因此只能安装6.0；</li>
+<li>Decord仅支持4.x的ffmpeg，如果要同时使用Decord和TorchCodec需安装4.0发行版（比如<code>n4.3.9</code>）。</li>
+</ul>
+</blockquote>
+<h3 id="Ascend"><a href="#Ascend" class="headerlink" title="Ascend"></a>Ascend</h3><p>有sudo权限，直接apt或者conda安装即可。</p>
+<h2 id="Decord"><a href="#Decord" class="headerlink" title="Decord"></a>Decord</h2><h3 id="Lambda-1"><a href="#Lambda-1" class="headerlink" title="Lambda"></a>Lambda</h3><p>直接pip安装。</p>
+<h3 id="Ascend-1"><a href="#Ascend-1" class="headerlink" title="Ascend"></a>Ascend</h3><p>无aarch64的包，需要编译安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 确保有ffmpeg 4.x</span></span><br><span class="line">ffmpeg -version</span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y build-essential python3-dev python3-setuptools make cmake</span><br><span class="line">sudo apt-get install -y libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> --recursive https://github.com/dmlc/decord</span><br><span class="line"><span class="built_in">cd</span> decord</span><br><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake .. -DUSE_CUDA=0 -DCMAKE_BUILD_TYPE=Release</span><br><span class="line">make -j$(<span class="built_in">nproc</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line"><span class="built_in">cd</span> ../python</span><br><span class="line">python setup.py install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">python -c <span class="string">&quot;import decord&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果报错：<code>OSError: /root/miniconda3/envs/dl_test/bin/../lib/libstdc++.so.6: version &#39;GLIBCXX_3.4.30&#39; not found</code>，可以尝试使用系统自带的GLIBCXX：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/lib/aarch64-linux-gnu:<span class="variable">$LD_LIBRARY_PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>在conda环境中系统库的路径可能会被conda覆盖，直接在conda安装更新版本的即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -c conda-forge <span class="string">&quot;libstdcxx-ng&gt;=13&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="TorchCodec"><a href="#TorchCodec" class="headerlink" title="TorchCodec"></a>TorchCodec</h2><h3 id="Lambda-2"><a href="#Lambda-2" class="headerlink" title="Lambda"></a>Lambda</h3><p>确保有FFmpeg后，按照<a target="_blank" rel="noopener" href="https://github.com/pytorch/torchcodec">官方文档</a>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 和Pytorch一致的安装方式</span></span><br><span class="line">pip install torchcodec --index-url=https://download.pytorch.org/whl/cu126</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ascend-2"><a href="#Ascend-2" class="headerlink" title="Ascend"></a>Ascend</h3><p><code>aarch64</code>下直接<code>pip install</code>得到的是占位的空包，需要编译安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/pytorch/torchcodec.git</span><br><span class="line"></span><br><span class="line"># 切换发行版本</span><br><span class="line">git checkout release/0.5</span><br><span class="line">python setup.py install</span><br><span class="line"></span><br><span class="line">python -c &quot;import torchcodec&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注意和torch版本的匹配：</p>
+<table>
+<thead>
+<tr>
+<th><code>torchcodec</code></th>
+<th><code>torch</code></th>
+<th>Python</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>main</code> &#x2F; <code>nightly</code></td>
+<td><code>main</code> &#x2F; <code>nightly</code></td>
+<td><code>&gt;=3.10</code>, <code>&lt;=3.13</code></td>
+</tr>
+<tr>
+<td><code>0.6</code></td>
+<td><code>2.8</code></td>
+<td><code>&gt;=3.9</code>, <code>&lt;=3.13</code></td>
+</tr>
+<tr>
+<td><code>0.5</code></td>
+<td><code>2.7</code></td>
+<td><code>&gt;=3.9</code>, <code>&lt;=3.13</code></td>
+</tr>
+<tr>
+<td><code>0.4</code></td>
+<td><code>2.7</code></td>
+<td><code>&gt;=3.9</code>, <code>&lt;=3.13</code></td>
+</tr>
+<tr>
+<td><code>0.3</code></td>
+<td><code>2.7</code></td>
+<td><code>&gt;=3.9</code>, <code>&lt;=3.13</code></td>
+</tr>
+<tr>
+<td><code>0.2</code></td>
+<td><code>2.6</code></td>
+<td><code>&gt;=3.9</code>, <code>&lt;=3.13</code></td>
+</tr>
+<tr>
+<td><code>0.1</code></td>
+<td><code>2.5</code></td>
+<td><code>&gt;=3.9</code>, <code>&lt;=3.12</code></td>
+</tr>
+<tr>
+<td><code>0.0.3</code></td>
+<td><code>2.4</code></td>
+<td><code>&gt;=3.8</code>, <code>&lt;=3.12</code></td>
+</tr>
+</tbody></table>
+<h2 id="qwen-vl-utils"><a href="#qwen-vl-utils" class="headerlink" title="qwen-vl-utils"></a>qwen-vl-utils</h2><p>千问官方的视频处理组件，好处是可以解析<code>messages</code>并按指定单帧像素、总像素读取视频，并支持多种后端。调用优先级应该是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TorchCodec-&gt;Decord-&gt;Torchvision</span><br></pre></td></tr></table></figure>
+
+</div><div class="article-licensing box"><div class="licensing-title"><p>Video Codec</p><p><a href="https://byter.ink/Tech/2025/ascend_codec/">https://byter.ink/Tech/2025/ascend_codec/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Byter</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2025-09-02</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/AI/">AI</a><a class="link-muted mr-2" rel="tag" href="/tags/Linux/">Linux</a><a class="link-muted mr-2" rel="tag" href="/tags/Ascend/">Ascend</a><a class="link-muted mr-2" rel="tag" href="/tags/CV/">CV</a></div><!--!--></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/Tech/2025/ascend_env/"><span class="level-item">Ascend Infra</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><!--!--></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#FFmpeg"><span class="level-left"><span class="level-item">1</span><span class="level-item">FFmpeg</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Lambda"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">Lambda</span></span></a></li><li><a class="level is-mobile" href="#Ascend"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">Ascend</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Decord"><span class="level-left"><span class="level-item">2</span><span class="level-item">Decord</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Lambda-1"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">Lambda</span></span></a></li><li><a class="level is-mobile" href="#Ascend-1"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">Ascend</span></span></a></li></ul></li><li><a class="level is-mobile" href="#TorchCodec"><span class="level-left"><span class="level-item">3</span><span class="level-item">TorchCodec</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Lambda-2"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">Lambda</span></span></a></li><li><a class="level is-mobile" href="#Ascend-2"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">Ascend</span></span></a></li></ul></li><li><a class="level is-mobile" href="#qwen-vl-utils"><span class="level-left"><span class="level-item">4</span><span class="level-item">qwen-vl-utils</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Academic/"><span class="level-start"><span class="level-item">Academic</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Blog/"><span class="level-start"><span class="level-item">Blog</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/categories/Tech/"><span class="level-start"><span class="level-item">Tech</span></span><span class="level-end"><span class="level-item tag">6</span></span></a></li><li><a class="level is-mobile" href="/categories/Thoughts/"><span class="level-start"><span class="level-item">Thoughts</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li><li><a class="level is-mobile" href="/categories/Whatever/"><span class="level-start"><span class="level-item">Whatever</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/AI/"><span class="tag">AI</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Ascend/"><span class="tag">Ascend</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CV/"><span class="tag">CV</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hardware/"><span class="tag">Hardware</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Introspection/"><span class="tag">Introspection</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Linux/"><span class="tag">Linux</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/M-C/"><span class="tag">M&amp;C</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MATLAB/"><span class="tag">MATLAB</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/MacOS/"><span class="tag">MacOS</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Network/"><span class="tag">Network</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Nonsense/"><span class="tag">Nonsense</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Paper/"><span class="tag">Paper</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Private/"><span class="tag">Private</span><span class="tag">2</span></a></div></div></div></div></div><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="/img/avatar.png" alt="Byter"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Byter</p><p class="is-size-6 is-block">Mathematics &amp; AI</p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">15</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">14</p></a></div></div></nav></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="Byter | Blog" height="28"></a><p class="is-size-7"><span>&copy; 2025 Byter</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p><p class="is-size-7">滇ICP备2020007033号</p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
